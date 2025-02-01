@@ -14,7 +14,7 @@ function HomePage() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('https://uot2hfc9sg.execute-api.us-east-1.amazonaws.com/dev/items');
+        const response = await fetch('https://uuk7wtzdud.execute-api.us-east-1.amazonaws.com/dev/items');
         if (response.ok) {
           const data = await response.json();
           setItems(data.items);

@@ -62,7 +62,7 @@ function AddItemPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://b4bxs0eg14.execute-api.us-east-1.amazonaws.com/dev/items", {
+      const response = await fetch("https://smt3fbpi31.execute-api.us-east-1.amazonaws.com/dev/items", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

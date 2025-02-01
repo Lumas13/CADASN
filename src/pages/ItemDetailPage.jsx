@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { API_URLS } from '../../config.js';
 import "../css/ItemDetailPage.css";
 
 function ItemDetailPage() {
@@ -10,7 +11,7 @@ function ItemDetailPage() {
   useEffect(() => {
     const fetchItemDetails = async () => {
       try {
-        const response = await fetch(`https://uuk7wtzdud.execute-api.us-east-1.amazonaws.com/dev/items/${id}`);
+        const response = await fetch(API_URLS.getItem());
         if (response.ok) {
           const data = await response.json();
           setItem(data);

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { API_URLS } from '../../config.js';
 import "../css/HomePage.css";
 
 function HomePage() {
@@ -14,7 +15,7 @@ function HomePage() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('https://uuk7wtzdud.execute-api.us-east-1.amazonaws.com/dev/items');
+        const response = await fetch(API_URLS.getAllItems());
         if (response.ok) {
           const data = await response.json();
           setItems(data.items);

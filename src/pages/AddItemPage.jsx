@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_URLS } from '../../config.js';
 import "../css/AddItemPage.css"; 
 
 function AddItemPage() {
@@ -62,7 +63,7 @@ function AddItemPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://uuk7wtzdud.execute-api.us-east-1.amazonaws.com/dev/items", {
+      const response = await fetch(API_URLS.createItem(), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

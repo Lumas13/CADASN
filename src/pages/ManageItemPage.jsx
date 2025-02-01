@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_URLS } from '../../config.js';
 import "../css/ManageItemPage.css";
 
 function ManageItemsPage() {
@@ -12,7 +13,7 @@ function ManageItemsPage() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('https://uuk7wtzdud.execute-api.us-east-1.amazonaws.com/dev/items');
+        const response = await fetch(API_URLS.getAllItems());
         if (response.ok) {
           const data = await response.json();
           setItems(data.items);
@@ -32,7 +33,7 @@ function ManageItemsPage() {
   // Update item details
   const handleUpdate = async (id, updates) => {
     try {
-      const response = await fetch(`https://uuk7wtzdud.execute-api.us-east-1.amazonaws.com/dev/items/${id}`, {
+      const response = await fetch(API_URLS.updateItem(), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updates),
@@ -58,7 +59,7 @@ function ManageItemsPage() {
     if (!isConfirmed) return;
 
     try {
-      const response = await fetch(`https://uuk7wtzdud.execute-api.us-east-1.amazonaws.com/dev/items/${id}`, {
+      const response = await fetch(API_URLS.deleteItem(), {
         method: "DELETE",
       });
 

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
@@ -78,15 +78,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/About" element={<AboutUsPage />} />
           <Route path="/item/:id" element={<ItemDetailPage />} />
-          <Route
-            path="/AddItem"
-            element={user ? <AddItemPage user={user} /> : <Navigate to="/Login" replace />}
-          />
+          <Route path="/AddItem" element={<AddItemPage/>} />
           {/* <Route path="/Login" element={<LoginPage setUser={setUser} />} /> */}
-          <Route
-            path="/ManageItems"
-            element={user ? <ManageItemPage /> : <Navigate to="/Login" replace />}
-          />
+          <Route path="/ManageItems"element={<ManageItemPage/>}/>
         </Routes>
       </main>
     </Router>

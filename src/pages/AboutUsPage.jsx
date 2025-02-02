@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
-import { API_URLS } from '../../config.js';
+import API_URLS from "../../config";
 import "../css/AboutUsPage.css";
 
 function AboutUsPage() {
@@ -25,7 +25,7 @@ function AboutUsPage() {
     }
 
     try {
-      const response = await fetch(API_URLS.subscribe(), {
+      const response = await fetch(`${API_URLS}/subscribe`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

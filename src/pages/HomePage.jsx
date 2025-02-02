@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { API_URLS } from '../../config.js';
+import API_URLS from "../../config";
 import "../css/HomePage.css";
+
 
 function HomePage() {
   const [items, setItems] = useState([]);
@@ -14,23 +15,28 @@ function HomePage() {
   // Fetch items from the API on component mount
   useEffect(() => {
     const fetchItems = async () => {
+      const apiUrl = (`${API_URLS}/items`);
+      //console.log("Fetching from:", apiUrl);
+  
       try {
-        const response = await fetch(API_URLS.getAllItems());
-        if (response.ok) {
-          const data = await response.json();
-          setItems(data.items);
-        } else {
-          console.error('Failed to fetch items');
+        const response = await fetch(apiUrl);
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
+  
+        const data = await response.json();
+        setItems(data.items);
       } catch (error) {
-        console.error('Error fetching items:', error);
+        console.error("Error fetching items:", error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchItems();
   }, []);
+  
 
   const filteredItems = items.filter((item) => {
     return (

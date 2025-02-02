@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_URLS } from '../../config.js';
+import API_URLS from "../../config";
 import "../css/AddItemPage.css"; 
 
 function AddItemPage() {
@@ -63,7 +63,7 @@ function AddItemPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(API_URLS.createItem(), {
+      const response = await fetch(`${API_URLS}/items`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

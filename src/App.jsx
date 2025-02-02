@@ -1,28 +1,44 @@
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
 import HomePage from "./pages/HomePage";
 import AboutUsPage from "./pages/AboutUsPage";
 import ItemDetailPage from "./pages/ItemDetailPage";
 import AddItemPage from "./pages/AddItemPage";
-import LoginPage from "./pages/LoginPage";
+// import LoginPage from "./pages/LoginPage";
 import ManageItemPage from "./pages/ManageItemPage"; 
 
 function App() {
+  // Check if a user is stored in localStorage and set state accordingly
   const [user, setUser] = useState(null); 
 
-  useState(() => {
+  useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser)); 
     }
   }, []);
 
+  // Handle logout and clear user from state and localStorage
   const handleLogout = () => {
     setUser(null); 
     localStorage.removeItem("user");
   };
 
+  // Manage user authentication via the Amplify Authenticator
+  const { signOut, user: authUser } = useAuthenticator();
+
+  // Update the user whenever the authentication state changes
+  useEffect(() => {
+    if (authUser) {
+      setUser(authUser); // When user logs in, store the user in state and localStorage
+      localStorage.setItem("user", JSON.stringify(authUser)); 
+    }
+  }, [authUser]);
+
   return (
+    <Authenticator>
     <Router>
       {/* Header Section */}
       <header className="navbar">
@@ -34,27 +50,23 @@ function App() {
             <ul>
               <li><Link to="/About">About Us</Link></li>
               {user && <li><Link to="/AddItem">Report Item</Link></li>}
-              {user?.role === "staff" && <li><Link to="/ManageItems">Manage Items</Link></li>} 
+              {user && <li><Link to="/ManageItems">Manage Items</Link></li>} 
             </ul>
           </nav>
         </div>
         <div className="navbar-right">
           <nav>
             <ul>
-              {!user ? (
-                <li><Link to="/Login">Login</Link></li>
-              ) : (
                 <>
                   <li className="user-info">
-                    Welcome, {user.name}
+                    Welcome, {user?.username}
                   </li>
                   <li>
-                    <button className="logout-button" onClick={handleLogout}>
+                    <button className="logout-button" onClick={() => { signOut(); handleLogout(); }}>
                       Logout
                     </button>
                   </li>
                 </>
-              )}
             </ul>
           </nav>
         </div>
@@ -70,14 +82,15 @@ function App() {
             path="/AddItem"
             element={user ? <AddItemPage user={user} /> : <Navigate to="/Login" replace />}
           />
-          <Route path="/Login" element={<LoginPage setUser={setUser} />} />
+          {/* <Route path="/Login" element={<LoginPage setUser={setUser} />} /> */}
           <Route
             path="/ManageItems"
-            element={user?.role === "staff" ? <ManageItemPage /> : <Navigate to="/Login" replace />}
+            element={user ? <ManageItemPage /> : <Navigate to="/Login" replace />}
           />
         </Routes>
       </main>
     </Router>
+    </Authenticator>
   );
 }
 

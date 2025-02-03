@@ -4,7 +4,7 @@ import config from "../../config";
 import "../css/ProfilePage.css";
 
 
-const categories = ["Accessories", "Electronics", "Clothing", "Musical Instrument", "Other"];
+// const categories = ["Accessories", "Electronics", "Clothing", "Musical Instrument", "Other"];
 
 function ProfilePage() {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -14,36 +14,42 @@ function ProfilePage() {
   const [loading, setLoading] = useState(true);
 
   // Fetch user preferences on mount
-  useEffect(() => {
-    const fetchUserPreferences = async () => {
-      try {
-        const response = await fetch(`${config.API_URLS}/preferences/${user.username}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        
-        setSelectedCategories(data.preferredCategories || []);
-        setIsSubscribed(data.isSubscribed || false);
-        setSubscribeToAll(data.subscribeToAll || false);
-      } catch (error) {
-        console.error("Error fetching preferences:", error);
-      } finally {
-        setLoading(false);
+useEffect(() => {
+  const fetchUserPreferences = async () => {
+    try {
+      const response = await fetch(`${config.API_URLS}/subscribe/${user.username}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
+      const data = await response.json();
 
-    fetchUserPreferences();
-  }, [user.username]);
-
-  // Handle category selection
-  const handleCategoryChange = (category) => {
-    if (selectedCategories.includes(category)) {
-      setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
-    } else {
-      setSelectedCategories([...selectedCategories, category]);
+      setSelectedCategories(data.preferredCategories || []);
+      setIsSubscribed(data.isSubscribed || false);
+      setSubscribeToAll(data.subscribeToAll || false);
+    } catch (error) {
+      console.error("Error fetching preferences:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  fetchUserPreferences();
+}, [user.username]);
+
+  // Handle category selection
+  // const handleCategoryChange = (category) => {
+  //   if (selectedCategories.includes(category)) {
+  //     setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
+  //   } else {
+  //     setSelectedCategories([...selectedCategories, category]);
+  //   }
+  // };
 
   // Handle "Subscribe to All" toggle
   const handleSubscribeToAllChange = () => {
@@ -90,7 +96,7 @@ function ProfilePage() {
     }
 
     try {
-      const unsubscribeResponse = await fetch(`${config.API_URLS}/unsubscribe`, {
+      const unsubscribeResponse = await fetch(`${config.API_URLS}/subscribe`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -139,7 +145,7 @@ function ProfilePage() {
         </label>
 
         {/* Category checkboxes (only show if not subscribing to all) */}
-        {!subscribeToAll && (
+        {/* {!subscribeToAll && (
           <>
             <p>Select categories youre interested in:</p>
             {categories.map((category) => (
@@ -154,7 +160,7 @@ function ProfilePage() {
               </label>
             ))}
           </>
-        )}
+        )} */}
 
         <button type="submit" disabled={isSubscribed}>
           {isSubscribed ? "Subscribed" : "Subscribe"}

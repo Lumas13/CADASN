@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { Link } from "react-router-dom";
-import API_URLS from "../../config";
+import config from "../../config";
 
 const categories = ["Accessories", "Electronics", "Clothing", "Musical Instrument", "Other"];
 
@@ -16,7 +16,7 @@ function ProfilePage() {
   useEffect(() => {
     const fetchUserPreferences = async () => {
       try {
-        const response = await fetch(`${API_URLS}/preferences/${user.username}`);
+        const response = await fetch(`${config.API_URLS}/preferences/${user.username}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -57,7 +57,7 @@ function ProfilePage() {
     e.preventDefault();
 
     try {
-      const subscribeResponse = await fetch(`${API_URLS}/subscribe`, {
+      const subscribeResponse = await fetch(`${config.API_URLS}/subscribe`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +89,7 @@ function ProfilePage() {
     }
 
     try {
-      const unsubscribeResponse = await fetch(`${API_URLS}/unsubscribe`, {
+      const unsubscribeResponse = await fetch(`${config.API_URLS}/unsubscribe`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

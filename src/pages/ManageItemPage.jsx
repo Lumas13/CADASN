@@ -114,7 +114,7 @@ function ManageItemsPage() {
 
   // Handle QR code generation
   const handleGenerateQRCode = (itemId) => {
-    const qrCodeUrl = `https://main.d2xon4urujrdqn.amplifyapp.com/confirm-pickup/${itemId}`;
+    const qrCodeUrl = `https://main.d2xon4urujrdqn.amplifyapp.com/claim/${itemId}`;
     setCurrentQRCodeUrl(qrCodeUrl);
     setShowQRCodeModal(true);
   };

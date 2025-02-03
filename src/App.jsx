@@ -7,7 +7,7 @@ import ItemDetailPage from "./pages/ItemDetailPage";
 import AddItemPage from "./pages/AddItemPage";
 import ManageItemPage from "./pages/ManageItemPage"; 
 import ProfilePage from "./pages/ProfilePage";
-import ConfirmClaimPage from "./pages/ConfirmClaimPage";
+import ClaimPage from "./pages/ClaimPage";
 
 function App() {
   // Call and set the user
@@ -61,7 +61,7 @@ function App() {
           <Route path="/Add" element={<AddItemPage/>} />
           <Route path="/Manage"element={<ManageItemPage/>}/>
           <Route path="/Profile"element={<ProfilePage/>}/>
-          <Route path="/Claim"element={<ConfirmClaimPage/>}/>
+          <Route path="/Claim"element={<ClaimPage/>}/>
         </Routes>
       </main>
     </Router>

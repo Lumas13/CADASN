@@ -9,7 +9,7 @@ function HomePage() {
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1); 
-  const itemsPerPage = 10; 
+  const itemsPerPage = 8; 
 
   // Fetch items from the API
   useEffect(() => {

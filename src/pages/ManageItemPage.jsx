@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import QRCode from "react-qr-code";
 import config from "../../config";
 import "../css/ManageItemPage.css";
 
@@ -7,8 +8,10 @@ function ManageItemsPage() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [currentEdit, setCurrentEdit] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1); 
-  const itemsPerPage = 5; 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showQRCodeModal, setShowQRCodeModal] = useState(false); 
+  const [currentQRCodeUrl, setCurrentQRCodeUrl] = useState(""); 
+  const itemsPerPage = 5;
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -41,7 +44,7 @@ function ManageItemsPage() {
 
       if (response.ok) {
         setItems(
-          items.map(item =>
+          items.map((item) =>
             item.itemId === id ? { ...item, ...updates } : item
           )
         );
@@ -53,9 +56,11 @@ function ManageItemsPage() {
     }
   };
 
-  // Delete item 
+  // Delete item
   const handleDelete = async (id) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete this item?");
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
     if (!isConfirmed) return;
 
     try {
@@ -64,7 +69,7 @@ function ManageItemsPage() {
       });
 
       if (response.ok) {
-        setItems(items.filter(item => item.itemId !== id));
+        setItems(items.filter((item) => item.itemId !== id));
       } else {
         console.error("Failed to delete item");
       }
@@ -84,7 +89,8 @@ function ManageItemsPage() {
 
   // Save edits to the item
   const saveEdit = async () => {
-    const { itemId, itemName, description, location, status, category } = currentEdit;
+    const { itemId, itemName, description, location, status, category } =
+      currentEdit;
     const updates = { itemName, description, location, status, category };
 
     await handleUpdate(itemId, updates);
@@ -96,14 +102,21 @@ function ManageItemsPage() {
   // Pagination logic
   const totalPages = Math.ceil(items.length / itemsPerPage);
   const currentItems = items.slice(
-    (currentPage - 1) * itemsPerPage, 
+    (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
-  ); 
+  );
 
   const handlePageChange = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
     }
+  };
+
+  // Handle QR code generation
+  const handleGenerateQRCode = (itemId) => {
+    const qrCodeUrl = `https://main.d2xon4urujrdqn.amplifyapp.com/confirm-pickup/${itemId}`;
+    setCurrentQRCodeUrl(qrCodeUrl);
+    setShowQRCodeModal(true);
   };
 
   return (
@@ -121,6 +134,7 @@ function ManageItemsPage() {
                 <th>Location</th>
                 <th>Status</th>
                 <th>Category</th>
+                <th>Claim</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -132,6 +146,7 @@ function ManageItemsPage() {
                   <td>{item.location}</td>
                   <td>{item.status}</td>
                   <td>{item.category}</td>
+                  <td>{item.claim}</td>
                   <td>
                     <button
                       onClick={() => {
@@ -144,21 +159,24 @@ function ManageItemsPage() {
                     <button onClick={() => handleDelete(item.itemId)}>
                       Delete
                     </button>
+                    <button onClick={() => handleGenerateQRCode(item.itemId)}>
+                      Generate QR Code
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
 
-          {/* Pagination*/}
+          {/* Pagination */}
           <div className="pagination">
             <button
               className="arrow"
               onClick={() => handlePageChange(currentPage - 1)}
             >
-              &#8592; 
+              &#8592;
             </button>
-            {[...Array(totalPages).keys()].map(page => (
+            {[...Array(totalPages).keys()].map((page) => (
               <button
                 key={page + 1}
                 onClick={() => handlePageChange(page + 1)}
@@ -171,7 +189,7 @@ function ManageItemsPage() {
               className="arrow"
               onClick={() => handlePageChange(currentPage + 1)}
             >
-              &#8594; 
+              &#8594;
             </button>
           </div>
         </>
@@ -246,6 +264,17 @@ function ManageItemsPage() {
               Cancel
             </button>
           </form>
+        </div>
+      )}
+
+      {/* QR Code Modal */}
+      {showQRCodeModal && (
+        <div className="qr-code-modal">
+          <div className="qr-code-content">
+            <h2>Scan QR Code for Pickup</h2>
+            <QRCode value={currentQRCodeUrl} size={256} />
+            <button onClick={() => setShowQRCodeModal(false)}>Close</button>
+          </div>
         </div>
       )}
     </div>

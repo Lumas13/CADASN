@@ -6,7 +6,8 @@ import AboutUsPage from "./pages/AboutUsPage";
 import ItemDetailPage from "./pages/ItemDetailPage";
 import AddItemPage from "./pages/AddItemPage";
 import ManageItemPage from "./pages/ManageItemPage"; 
-import Profilepage from "./pages/ProfilePage";
+import ProfilePage from "./pages/ProfilePage";
+import ConfirmClaimPage from "./pages/ConfirmClaimPage";
 
 function App() {
   // Call and set the user
@@ -27,8 +28,8 @@ function App() {
           <nav>
             <ul>
               <li><Link to="/About">About Us</Link></li>
-              {user && <li><Link to="/AddItem">Report Item</Link></li>}
-              {user && <li><Link to="/ManageItems">Manage Items</Link></li>}
+              {user && <li><Link to="/Add">Report Item</Link></li>}
+              {user && <li><Link to="/Manage">Manage Items</Link></li>}
               {user && <li><Link to="/Profile">Profile</Link></li>}
             </ul>
           </nav>
@@ -57,9 +58,10 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/About" element={<AboutUsPage />} />
           <Route path="/item/:id" element={<ItemDetailPage />} />
-          <Route path="/AddItem" element={<AddItemPage/>} />
-          <Route path="/ManageItems"element={<ManageItemPage/>}/>
-          <Route path="/Profile"element={<Profilepage/>}/>
+          <Route path="/Add" element={<AddItemPage/>} />
+          <Route path="/Manage"element={<ManageItemPage/>}/>
+          <Route path="/Profile"element={<ProfilePage/>}/>
+          <Route path="/Claim"element={<ConfirmClaimPage/>}/>
         </Routes>
       </main>
     </Router>

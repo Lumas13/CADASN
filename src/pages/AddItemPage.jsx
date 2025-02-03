@@ -56,6 +56,7 @@ function AddItemPage() {
       location,
       status,
       category: "Pending", 
+      claim: "false",
       image: imageBase64,  
     };
     

@@ -29,7 +29,7 @@ function App() {
             <ul>
               <li><Link to="/About">About Us</Link></li>
               {user && <li><Link to="/Add">Report Item</Link></li>}
-              {user && <li><Link to="/Manage">Manage Items</Link></li>}
+              {user && user?.signInDetails?.loginId?.includes('staff') && (<li><Link to="/Manage">Manage Items</Link></li>)}
               {user && <li><Link to="/Profile">Profile</Link></li>}
             </ul>
           </nav>

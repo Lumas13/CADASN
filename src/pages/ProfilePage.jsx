@@ -3,8 +3,8 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import config from "../../config";
 import "../css/ProfilePage.css";
 
-
-// const categories = ["Accessories", "Electronics", "Clothing", "Musical Instrument", "Other"];
+// Define the categories
+const categories = ["Accessories", "Electronics", "Clothing", "Musical Instrument", "Other"];
 
 function ProfilePage() {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -14,42 +14,42 @@ function ProfilePage() {
   const [loading, setLoading] = useState(true);
 
   // Fetch user preferences on mount
-useEffect(() => {
-  const fetchUserPreferences = async () => {
-    try {
-      const response = await fetch(`${config.API_URLS}/subscribe/${user.username}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  useEffect(() => {
+    const fetchUserPreferences = async () => {
+      try {
+        const response = await fetch(`${config.API_URLS}/subscribe/${user.username}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        setSelectedCategories(data.preferredCategories || []);
+        setIsSubscribed(data.isSubscribed || false);
+        setSubscribeToAll(data.subscribeToAll || false);
+      } catch (error) {
+        console.error("Error fetching preferences:", error);
+      } finally {
+        setLoading(false);
       }
-      const data = await response.json();
+    };
 
-      setSelectedCategories(data.preferredCategories || []);
-      setIsSubscribed(data.isSubscribed || false);
-      setSubscribeToAll(data.subscribeToAll || false);
-    } catch (error) {
-      console.error("Error fetching preferences:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchUserPreferences();
-}, [user.username]);
+    fetchUserPreferences();
+  }, [user.username]);
 
   // Handle category selection
-  // const handleCategoryChange = (category) => {
-  //   if (selectedCategories.includes(category)) {
-  //     setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
-  //   } else {
-  //     setSelectedCategories([...selectedCategories, category]);
-  //   }
-  // };
+  const handleCategoryChange = (category) => {
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
 
   // Handle "Subscribe to All" toggle
   const handleSubscribeToAllChange = () => {
@@ -127,10 +127,8 @@ useEffect(() => {
 
   return (
     <div className="profile-page">
-      <h1>Profile Page</h1>
-      <p>Welcome, {user.username}!</p>
-      <p>Email: {user.signInDetails.loginId}</p>
-
+      <h1>Profile</h1>
+      <p>Welcome, {user.signInDetails.loginId}!</p>
       <form onSubmit={handleSubmit}>
         <h2>Subscribe to Notifications</h2>
 
@@ -145,7 +143,7 @@ useEffect(() => {
         </label>
 
         {/* Category checkboxes (only show if not subscribing to all) */}
-        {/* {!subscribeToAll && (
+        {!subscribeToAll && (
           <>
             <p>Select categories youre interested in:</p>
             {categories.map((category) => (
@@ -160,7 +158,7 @@ useEffect(() => {
               </label>
             ))}
           </>
-        )} */}
+        )}
 
         <button type="submit" disabled={isSubscribed}>
           {isSubscribed ? "Subscribed" : "Subscribe"}
@@ -168,20 +166,19 @@ useEffect(() => {
       </form>
 
       {/* Unsubscribe Button */}
-
-        <button
-          onClick={handleUnsubscribe}
-          style={{
-            marginTop: "10px",
-            backgroundColor: "red",
-            color: "white",
-            padding: "10px",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          Unsubscribe
-        </button>
+      <button
+        onClick={handleUnsubscribe}
+        style={{
+          marginTop: "10px",
+          backgroundColor: "red",
+          color: "white",
+          padding: "10px",
+          border: "none",
+          cursor: "pointer",
+        }}
+      >
+        Unsubscribe
+      </button>
     </div>
   );
 }

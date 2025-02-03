@@ -30,9 +30,9 @@ function ItemDetailPage() {
 
   const getStatusText = () => {
     if (item.status === "Found") {
-      return "This item has been found. If you are the owner, head down to the location.";
+      return "This item has been found. If you are the owner, head down to the office.";
     }
-    return "If this item has been found, please bring it to the location.";
+    return "If this item has been found, please bring it to the office.";
   };
 
   if (loading) {

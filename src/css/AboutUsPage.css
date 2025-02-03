@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px; /* Space between text and image */
+  gap: 40px; 
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;

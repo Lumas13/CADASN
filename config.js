@@ -4,6 +4,7 @@ const config = {
     REGION: 'us-east-1',
     USER_POOL_ID: 'us-east-1_wT1Lb5YQI',
     USER_POOL_APP_CLIENT_ID: '58ul822ur1r3iphk0j409ms538',
+    AMPLIFY_URL: "",
   };
   
   export default config;

@@ -33,7 +33,6 @@ function ManageItemsPage() {
     fetchItems();
   }, []);
 
-  // Update item details
   const handleUpdate = async (id, updates) => {
     try {
       const response = await fetch(`${config.API_URLS}/items/${id}`, {
@@ -41,13 +40,20 @@ function ManageItemsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updates),
       });
-
+  
       if (response.ok) {
-        setItems(
-          items.map((item) =>
-            item.itemId === id ? { ...item, ...updates } : item
-          )
-        );
+        // Fetch updated item data
+        const updatedItemResponse = await fetch(`${config.API_URLS}/items/${id}`);
+        if (updatedItemResponse.ok) {
+          const updatedItem = await updatedItemResponse.json();
+          
+          // Update state to reflect the new changes
+          setItems((prevItems) =>
+            prevItems.map((item) =>
+              item.itemId === id ? updatedItem : item
+            )
+          );
+        }
       } else {
         console.error("Failed to update item");
       }
@@ -55,6 +61,7 @@ function ManageItemsPage() {
       console.error("Error updating item:", error);
     }
   };
+  
 
   // Delete item
   const handleDelete = async (id) => {
@@ -114,7 +121,7 @@ function ManageItemsPage() {
 
   // Handle QR code generation
   const handleGenerateQRCode = (itemId) => {
-    const qrCodeUrl = `https://main.d2xon4urujrdqn.amplifyapp.com/claim/${itemId}`;
+    const qrCodeUrl = `${config.AMPLIFY_URL}/claim/${itemId}`;
     setCurrentQRCodeUrl(qrCodeUrl);
     setShowQRCodeModal(true);
   };

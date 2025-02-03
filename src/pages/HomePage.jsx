@@ -3,28 +3,25 @@ import { Link } from "react-router-dom";
 import API_URLS from "../../config";
 import "../css/HomePage.css";
 
-
 function HomePage() {
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1); 
-  const itemsPerPage = 12; 
+  const itemsPerPage = 10; 
 
-  // Fetch items from the API on component mount
+  // Fetch items from the API
   useEffect(() => {
     const fetchItems = async () => {
       const apiUrl = (`${API_URLS}/items`);
       //console.log("Fetching from:", apiUrl);
-  
       try {
         const response = await fetch(apiUrl);
   
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-  
         const data = await response.json();
         setItems(data.items);
       } catch (error) {

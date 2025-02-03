@@ -1,41 +1,19 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import HomePage from "./pages/HomePage";
 import AboutUsPage from "./pages/AboutUsPage";
 import ItemDetailPage from "./pages/ItemDetailPage";
 import AddItemPage from "./pages/AddItemPage";
-// import LoginPage from "./pages/LoginPage";
 import ManageItemPage from "./pages/ManageItemPage"; 
+import Profilepage from "./pages/ProfilePage";
 
 function App() {
-  // Check if a user is stored in localStorage and set state accordingly
-  const [user, setUser] = useState(null); 
+  // Call and set the user
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser)); 
-    }
-  }, []);
-
-  // Handle logout and clear user from state and localStorage
-  const handleLogout = () => {
-    setUser(null); 
-    localStorage.removeItem("user");
-  };
-
-  // Manage user authentication via the Amplify Authenticator
-  const { signOut, user: authUser } = useAuthenticator();
-
-  // Update the user whenever the authentication state changes
-  useEffect(() => {
-    if (authUser) {
-      setUser(authUser); // When user logs in, store the user in state and localStorage
-      localStorage.setItem("user", JSON.stringify(authUser)); 
-    }
-  }, [authUser]);
+  //console.log(user?.signInDetails.loginId)
+  //console.log(user?.emailaddress);
 
   return (
     <Authenticator>
@@ -59,10 +37,10 @@ function App() {
             <ul>
                 <>
                   <li className="user-info">
-                    Welcome, {user?.username}
+                    Welcome, {user?.signInDetails.loginId}
                   </li>
                   <li>
-                    <button className="logout-button" onClick={() => { signOut(); handleLogout(); }}>
+                    <button className="logout-button" onClick={ signOut }>
                       Logout
                     </button>
                   </li>
@@ -79,8 +57,8 @@ function App() {
           <Route path="/About" element={<AboutUsPage />} />
           <Route path="/item/:id" element={<ItemDetailPage />} />
           <Route path="/AddItem" element={<AddItemPage/>} />
-          {/* <Route path="/Login" element={<LoginPage setUser={setUser} />} /> */}
           <Route path="/ManageItems"element={<ManageItemPage/>}/>
+          <Route path="/Profile"element={<Profilepage/>}/>
         </Routes>
       </main>
     </Router>

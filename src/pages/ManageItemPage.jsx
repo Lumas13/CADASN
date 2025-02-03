@@ -89,9 +89,9 @@ function ManageItemsPage() {
 
   // Save edits to the item
   const saveEdit = async () => {
-    const { itemId, itemName, description, location, status, claim } =
+    const { itemId, itemName, description, location, status, category, claim } =
       currentEdit;
-    const updates = { itemName, description, location, status, claim };
+    const updates = { itemName, description, location, status, category, claim };
 
     await handleUpdate(itemId, updates);
 
@@ -243,15 +243,6 @@ function ManageItemsPage() {
                 <option value="Lost">Lost</option>
                 <option value="Found">Found</option>
               </select>
-            </label>
-            <label>
-              claim:
-              <input
-                type="checkbox"
-                name="claim"
-                checked={currentEdit.claim || false}
-                onChange={(e) => setCurrentEdit({ ...currentEdit, claim: e.target.checked })}
-              />
             </label>
             <button type="submit">Save</button>
             <button type="button" onClick={() => setIsEditing(false)}>

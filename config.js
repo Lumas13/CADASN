@@ -1,15 +1,15 @@
 // API GATEWAY LINK
 const config = {
-    API_URLS: 'https://xq91wzy7s8.execute-api.us-east-1.amazonaws.com/dev',
+    API_URLS: 'https://0410st8t43.execute-api.us-east-1.amazonaws.com/dev',
     REGION: 'us-east-1',
-    USER_POOL_ID: 'efeus-east-1_wNSAMFMsLfef',
-    USER_POOL_APP_CLIENT_ID: '16mivs0rrbu49ls3euqs1tdi5l',
+    USER_POOL_ID: 'us-east-1_wT1Lb5YQI',
+    USER_POOL_APP_CLIENT_ID: '58ul822ur1r3iphk0j409ms538',
   };
   
   export default config;
   
 // Deploy Amplify
-// aws amplify start-job --app-id d2lub5hxhqlu2j --branch-name main --job-type RELEASE 
+// aws amplify start-job --app-id d2xon4urujrdqn --branch-name main --job-type RELEASE 
 
 // Things to replace after a fresh deployment
 // API_URLS Link

@@ -61,7 +61,7 @@ function App() {
           <Route path="/Add" element={<AddItemPage/>} />
           <Route path="/Manage"element={<ManageItemPage/>}/>
           <Route path="/Profile"element={<ProfilePage/>}/>
-          <Route path="/Claim"element={<ClaimPage/>}/>
+          <Route path="/Claim/:id"element={<ClaimPage/>}/>
         </Routes>
       </main>
     </Router>

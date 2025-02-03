@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { Link } from "react-router-dom";
 import API_URLS from "../../config";
@@ -140,7 +140,7 @@ function ProfilePage() {
         {/* Category checkboxes (only show if not subscribing to all) */}
         {!subscribeToAll && (
           <>
-            <p>Select categories you're interested in:</p>
+            <p>Select categories youre interested in:</p>
             {categories.map((category) => (
               <label key={category} style={{ display: "block", margin: "5px 0" }}>
                 <input

@@ -1,11 +1,11 @@
 // API GATEWAY LINK
-const API_URLS = 'https://0xpi7fggnh.execute-api.us-east-1.amazonaws.com/dev';
+const API_URLS = 'https://xq91wzy7s8.execute-api.us-east-1.amazonaws.com/dev/';
 
 
 export default API_URLS;
 
 // Deploy Amplify
-// aws amplify start-job --app-id d2ev2ax99h35b --branch-name main --job-type RELEASE 
+// aws amplify start-job --app-id d2lub5hxhqlu2j --branch-name main --job-type RELEASE 
 
 // Things to replace after a fresh deployment
 // API_URLS Link

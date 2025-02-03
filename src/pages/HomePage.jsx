@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import API_URLS from "../../config";
+import config from "../../config";
 import "../css/HomePage.css";
 
 function HomePage() {
@@ -14,7 +14,7 @@ function HomePage() {
   // Fetch items from the API
   useEffect(() => {
     const fetchItems = async () => {
-      const apiUrl = (`${API_URLS}/items`);
+      const apiUrl = (`${config.API_URLS}/items`);
       //console.log("Fetching from:", apiUrl);
       try {
         const response = await fetch(apiUrl);

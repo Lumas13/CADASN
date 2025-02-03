@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import { Link } from "react-router-dom";
 import config from "../../config";
+import "../css/ProfilePage.css";
+
 
 const categories = ["Accessories", "Electronics", "Clothing", "Musical Instrument", "Other"];
 
@@ -175,10 +176,6 @@ function ProfilePage() {
         >
           Unsubscribe
         </button>
-
-      <Link to="/" className="back-to-home">
-        Back to Home
-      </Link>
     </div>
   );
 }

@@ -1,0 +1,84 @@
+/* ProfilePage.css */
+.profile-page {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-family: "Arial", sans-serif;
+    text-align: center;
+  }
+  
+  .profile-page h1 {
+    color: #333;
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+  
+  .profile-page p {
+    color: #666;
+    font-size: 16px;
+  }
+  
+  form {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  h2 {
+    font-size: 20px;
+    color: #222;
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #444;
+    cursor: pointer;
+  }
+  
+  input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s ease;
+  }
+  
+  button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  button[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+  
+  .unsubscribe-button {
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .unsubscribe-button:hover {
+    background-color: #b52b3a;
+  }

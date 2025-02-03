@@ -28,7 +28,8 @@ function App() {
             <ul>
               <li><Link to="/About">About Us</Link></li>
               {user && <li><Link to="/AddItem">Report Item</Link></li>}
-              {user && <li><Link to="/ManageItems">Manage Items</Link></li>} 
+              {user && <li><Link to="/ManageItems">Manage Items</Link></li>}
+              {user && <li><Link to="/Profile">Profile</Link></li>}
             </ul>
           </nav>
         </div>

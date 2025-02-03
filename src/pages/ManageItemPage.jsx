@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import API_URLS from "../../config";
+import config from "../../config";
 import "../css/ManageItemPage.css";
 
 function ManageItemsPage() {
@@ -13,7 +13,7 @@ function ManageItemsPage() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch(`${API_URLS}/items`);
+        const response = await fetch(`${config.API_URLS}/items`);
         if (response.ok) {
           const data = await response.json();
           setItems(data.items);
@@ -33,7 +33,7 @@ function ManageItemsPage() {
   // Update item details
   const handleUpdate = async (id, updates) => {
     try {
-      const response = await fetch(`${API_URLS}/items/${id}`, {
+      const response = await fetch(`${config.API_URLS}/items/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updates),
@@ -59,7 +59,7 @@ function ManageItemsPage() {
     if (!isConfirmed) return;
 
     try {
-      const response = await fetch(`${API_URLS}/items/${id}`, {
+      const response = await fetch(`${config.API_URLS}/items/${id}`, {
         method: "DELETE",
       });
 

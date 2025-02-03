@@ -9,8 +9,8 @@ function ManageItemsPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [currentEdit, setCurrentEdit] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [showQRCodeModal, setShowQRCodeModal] = useState(false); 
-  const [currentQRCodeUrl, setCurrentQRCodeUrl] = useState(""); 
+  const [showQRCodeModal, setShowQRCodeModal] = useState(false);
+  const [currentQRCodeUrl, setCurrentQRCodeUrl] = useState("");
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -33,6 +33,7 @@ function ManageItemsPage() {
     fetchItems();
   }, []);
 
+  // Update item details
   const handleUpdate = async (id, updates) => {
     try {
       const response = await fetch(`${config.API_URLS}/items/${id}`, {
@@ -40,20 +41,13 @@ function ManageItemsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updates),
       });
-  
+
       if (response.ok) {
-        // Fetch updated item data
-        const updatedItemResponse = await fetch(`${config.API_URLS}/items/${id}`);
-        if (updatedItemResponse.ok) {
-          const updatedItem = await updatedItemResponse.json();
-          
-          // Update state to reflect the new changes
-          setItems((prevItems) =>
-            prevItems.map((item) =>
-              item.itemId === id ? updatedItem : item
-            )
-          );
-        }
+        setItems(
+          items.map((item) =>
+            item.itemId === id ? { ...item, ...updates } : item
+          )
+        );
       } else {
         console.error("Failed to update item");
       }
@@ -61,7 +55,6 @@ function ManageItemsPage() {
       console.error("Error updating item:", error);
     }
   };
-  
 
   // Delete item
   const handleDelete = async (id) => {
@@ -96,9 +89,9 @@ function ManageItemsPage() {
 
   // Save edits to the item
   const saveEdit = async () => {
-    const { itemId, itemName, description, location, status, category } =
+    const { itemId, itemName, description, location, status, claim } =
       currentEdit;
-    const updates = { itemName, description, location, status, category };
+    const updates = { itemName, description, location, status, claim };
 
     await handleUpdate(itemId, updates);
 
@@ -141,7 +134,7 @@ function ManageItemsPage() {
                 <th>Location</th>
                 <th>Status</th>
                 <th>Category</th>
-                <th>Claim</th>
+                <th>claim</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -252,19 +245,13 @@ function ManageItemsPage() {
               </select>
             </label>
             <label>
-              Category:
-              <select
-                name="category"
-                value={currentEdit.category || ""}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="Accessories">Accessories</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Utensils">Utensils</option>
-                <option value="Clothing">Clothing</option>
-                <option value="Other">Other</option>
-              </select>
+              claim:
+              <input
+                type="checkbox"
+                name="claim"
+                checked={currentEdit.claim || false}
+                onChange={(e) => setCurrentEdit({ ...currentEdit, claim: e.target.checked })}
+              />
             </label>
             <button type="submit">Save</button>
             <button type="button" onClick={() => setIsEditing(false)}>

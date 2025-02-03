@@ -159,12 +159,15 @@
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  display: flex;
+  flex-direction: column;  /* Ensure QR code and button are stacked vertically */
+  align-items: center;     /* Center the content horizontally */
 }
 
 .qr-code-content button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #6aa84f;
   color: white;
   border: none;
   border-radius: 5px;
@@ -172,5 +175,5 @@
 }
 
 .qr-code-content button:hover {
-  background-color: #0056b3;
+  background-color: #5a9447;
 }

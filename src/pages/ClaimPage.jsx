@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import config from '../../config';
+import "../css/ClaimPage.css";
+
 
 function ClaimPage() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState  (true);
 
   useEffect(() => {
     const fetchItemDetails = async () => {
@@ -48,13 +50,18 @@ function ClaimPage() {
   }
 
   return (
-    <div>
-      <h1>Confirm Pickup</h1>
-      <h2>{item.itemName}</h2>
-      <p>{item.description}</p>
+<div className="claim-page">
+  <div className="claim-card">
+    <h1>Claim</h1>
+    <h2 className="claim-name">{item.itemName}</h2>
+    <div className="claim-image">
       <img src={item.imageUrl} alt={item.itemName} />
-      <button onClick={handleConfirmPickup}>Confirm Pickup</button>
     </div>
+    <button className="claim-btn" onClick={handleConfirmPickup}>
+      Confirm Claim
+    </button>
+  </div>
+</div>
   );
 }
 

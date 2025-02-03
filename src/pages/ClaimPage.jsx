@@ -3,32 +3,33 @@ import { useParams } from 'react-router-dom';
 import config from '../../config';
 
 function ClaimPage() {
-  const { itemId } = useParams();
+  const { id } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchItem = async () => {
+    const fetchItemDetails = async () => {
       try {
-        const response = await fetch(`${config.API_URLS}/items/${itemId}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+        const response = await fetch(`${config.API_URLS}/items/${id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setItem(data);
+        } else {
+          console.error("Failed to fetch item details: ", response.statusText);
         }
-        const data = await response.json();
-        setItem(data);
       } catch (error) {
-        console.error("Error fetching item:", error);
+        console.error("Error fetching item details:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchItem();
-  }, [itemId]);
+    fetchItemDetails();
+  }, [id]);
 
   const handleConfirmPickup = async () => {
     try {
-      const response = await fetch(`${config.API_URLS}/items/${itemId}/claim`, {
+      const response = await fetch(`${config.API_URLS}/items/${id}/claim`, {
         method: 'PUT',
       });
       if (!response.ok) {

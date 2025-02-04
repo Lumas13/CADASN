@@ -30,14 +30,13 @@ function ClaimPage() {
     fetchItemDetails();
   }, [id]);
 
-  const claimedBy = user.signInDetails.loginId;
+  //const claimedBy = user.signInDetails.loginId;
 
   const handleConfirmPickup = async () => {
     try {
       const response = await fetch(`${config.API_URLS}/items/${id}/claim`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(claimedBy),
       });
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);

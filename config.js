@@ -8,10 +8,20 @@ const config = {
   };
   
   export default config;
-  
-// Deploy Amplify
-// aws amplify start-job --app-id d1kdsrhv8vynd1 --branch-name main --job-type RELEASE 
 
-// Things to replace after a fresh deployment
-// API_URLS, USERPOOLID, CLIENTID, AMPLIFY URL
-// Once replace run replace the app-id in deploy amplify code and run it in terminal
+// How to deploy CDK
+// 1. AWS Configure your credentials in AWS CLI in root
+// 2. Change directory to CDK
+// 3. cdk bootstrap (1st time use)
+// 4. cdk synth (generate cloudformation template)
+// 5. cdk deploy (deploy stack)
+
+// After fresh deployment
+// 1. Replace the variables using outputs from deployment
+// 2. API_URLS, USER_POOL_ID, USER_POOL_APP_CLIENT_ID, AMPLIFY_URL
+// 3. Replace the app-id in amplify start job and run in terminal to run job, "aws amplify start-job --app-id d1kdsrhv8vynd1 --branch-name main --job-type RELEASE"
+// 4. Push the new variables to github 
+// 5. Wait for amplify to deploy, onced deployed, the website is usable
+
+// Things to take note
+// Need personal github access token in CDK stack to deploy amplify during deployment

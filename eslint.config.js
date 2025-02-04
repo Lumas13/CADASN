@@ -11,8 +11,8 @@ export default [
     languageOptions: {
       ecmaVersion: 2020,
       globals: {
-        ...globals.browser, // For React/browser code
-        ...globals.node, // Add Node.js globals
+        ...globals.browser, 
+        ...globals.node, 
       },
       parserOptions: {
         ecmaVersion: 'latest',

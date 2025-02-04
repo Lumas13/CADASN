@@ -9,6 +9,10 @@ const config = {
   
   export default config;
 
+// Things to take note
+// Need personal github access token in CDK stack to deploy amplify during deployment
+// Need to NPM install in root folder, cdk folder and individual lambda functions folder before deployment
+
 // How to deploy CDK
 // 1. AWS Configure your credentials in AWS CLI in root
 // 2. Change directory to CDK
@@ -22,6 +26,3 @@ const config = {
 // 3. Replace the app-id in amplify start job and run in terminal to run job, "aws amplify start-job --app-id d1kdsrhv8vynd1 --branch-name main --job-type RELEASE"
 // 4. Push the new variables to github 
 // 5. Wait for amplify to deploy, onced deployed, the website is usable
-
-// Things to take note
-// Need personal github access token in CDK stack to deploy amplify during deployment

@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAuthenticator } from "@aws-amplify/ui-react";
 import config from '../../config';
 import "../css/ClaimPage.css";
-
 
 function ClaimPage() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState  (true);
+  const { user } = useAuthenticator((context) => [context.user]);
 
   useEffect(() => {
     const fetchItemDetails = async () => {
@@ -29,10 +30,14 @@ function ClaimPage() {
     fetchItemDetails();
   }, [id]);
 
+  const claimedBy = user.signInDetails.loginId;
+
   const handleConfirmPickup = async () => {
     try {
       const response = await fetch(`${config.API_URLS}/items/${id}/claim`, {
         method: 'PUT',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(claimedBy),
       });
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
